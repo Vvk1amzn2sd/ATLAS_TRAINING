@@ -1,0 +1,82 @@
+
+@startuml
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+title Reversing a Singly Linked List
+
+start
+
+:Initialize pointers;
+note right
+  prev = null
+  current = head
+  next = null
+end note
+
+if (current == null?) then (yes)
+  :List is empty
+  Return null;
+  stop
+endif
+
+:Original List;
+note right
+  head-> 1 -> 2 -> 3 -> 4 -> null
+end note
+
+while (current != null?) is (yes)
+  :Store next node;
+  note right
+    next = current.next
+    Save reference before breaking link
+    (next->2->3->4->null)
+  end note
+ 
+  :Reverse current node's pointer;
+  note right
+    current.next = prev
+    (null <- 1)
+    Breaking original LL link,
+    next stores remaining nodes
+  end note
+ 
+  :Move prev pointer forward;
+  note right
+    prev = current
+    prev points to same as current node
+  end note
+ 
+  :Move current pointer forward;
+  note right
+    current = next
+    Moving to saved next node
+  end note
+
+  :Current state;
+  note right
+    Already Reversed | Remaining
+  null <- 1                2 -> 3 -> 4 -> null
+                ^              ^
+                |               |
+                pre          current
+  end note
+endwhile (no)
+
+:Update head;
+note right
+  head = prev
+  Last node becomes new head
+end note
+
+:Final Reversed List;
+note right
+  Output: null <- 1 <- 2 <- 3 <- 4
+                                                     ^
+                                                     |
+                                                    head
+end note
+
+stop
+@enduml
+
